@@ -1,0 +1,34 @@
+.navbar{
+    /* height: 10vh; */
+    width: 100%;
+    background-color: var(--accent);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 4rem;
+    color: var(--light);
+}
+.brandInfo{
+    font-size: 2rem;
+    font-weight: 700;
+}
+.navbar ul{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+.navbar ul a{
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease-in-out;
+}
+.navbar a{
+    text-decoration: none;
+    color: var(--light);
+}
+.navbar ul a:hover{
+    background-color: var(--dark);
+}
