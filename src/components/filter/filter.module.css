@@ -1,0 +1,33 @@
+.filterContainer{
+    position: relative;
+    flex: 1;
+}
+.filterButton{
+    font-size: 1.5rem;
+    height: 100%;
+    padding: 10px 15px;
+    background-color: var(--accent);
+    color: var(--light);
+    border: none;
+    border-radius: 10px;
+}
+.filterButton i{
+    display: flex;
+    align-items: center;
+}
+.filters{
+    position: absolute;
+    top: 110%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background-color: white;
+    box-shadow: -1px 1px 3px 1px var(--neutral);
+}
+.hide{
+    display: none;
+}
+.show{
+    display: flex;
+}

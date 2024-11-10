@@ -1,0 +1,13 @@
+.search{
+    width: 100%;
+    padding: 15px 15px;
+    font-size: 1.5rem;
+    outline: none;
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    background-color: transparent;
+    transition: all 0.3s;
+}
+.search:focus{
+    outline: 1px solid var(--accent)
+}
