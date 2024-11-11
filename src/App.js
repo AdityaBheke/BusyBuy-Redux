@@ -4,6 +4,7 @@ import Navbar from './components/navbar/Navbar';
 import Home from './pages/home/Home';
 import Cart from './pages/cart/Cart';
 import Order from './pages/order/Order';
+import AuthPage from './pages/auth/authPage';
 
 function App() {
   const browserRouter = createBrowserRouter([
@@ -22,6 +23,14 @@ function App() {
         {
           path:'orders',
           element:<Order/>
+        },
+        {
+          path:'signin',
+          element: <AuthPage type={"signin"}/>
+        },
+        {
+          path:'signup',
+          element: <AuthPage type={"signup"}/>
         }
       ]
     }

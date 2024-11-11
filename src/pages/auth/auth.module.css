@@ -1,0 +1,60 @@
+.main{
+    width: 30%;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.heading{
+    width: 100%;
+    padding: 2rem;
+    font-size: 3rem;
+    font-weight: 800;
+}
+.authForm{
+    width: 100%;
+    /* background-color: white; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    border-radius: 0.5rem;
+}
+.authForm input{
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1.2rem;
+    border: 1px solid var(--accent);
+    outline: none;
+    border-radius: 0.5rem;
+}
+.authForm input:focus{
+    outline: 1px solid var(--accent);
+}
+.authForm button{
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    background-color: var(--accent);
+    color: var(--light);
+    border: 1px solid var(--accent);
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+}
+.authForm button:hover{
+    background-color: var(--dark);
+}
+.authForm button:active::after{
+    background-color: var(--accent);
+}
+.alternate{
+    width: 100%;
+    padding: 0 2rem;
+}
+.alternate a{
+    text-decoration: none;
+    color: var(--accent);
+}

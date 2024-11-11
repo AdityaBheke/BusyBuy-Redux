@@ -24,9 +24,9 @@ function Navbar() {
               <i className="fi fi-ss-shopping-cart"></i> Cart
             </li>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/signin"}>
             <li>
-              <i className="fi fi-br-exit"></i> Logout
+              <i className="fi fi-br-exit"></i> Login
             </li>
           </Link>
         </ul>
