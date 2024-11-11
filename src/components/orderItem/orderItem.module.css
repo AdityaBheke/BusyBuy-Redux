@@ -1,0 +1,18 @@
+.orderItem{
+    width: 100%;
+}
+.orderItem h2{
+    text-align: center;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+table{
+    width: 100%;
+    text-align: center;
+    background-color: white;
+    border-collapse: collapse;
+}
+td, th{
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--light);
+}

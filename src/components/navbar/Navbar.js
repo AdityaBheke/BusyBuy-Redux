@@ -14,7 +14,7 @@ function Navbar() {
               <i className="fi fi-ss-house-chimney"></i> Home
             </li>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/orders"}>
             <li>
               <i className="fi fi-ss-basket-shopping-simple"></i> My Orders
             </li>
