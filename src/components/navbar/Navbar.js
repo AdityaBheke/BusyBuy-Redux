@@ -19,7 +19,7 @@ function Navbar() {
               <i className="fi fi-ss-basket-shopping-simple"></i> My Orders
             </li>
           </Link>
-          <Link to={"/"}>
+          <Link to={"/cart"}>
             <li>
               <i className="fi fi-ss-shopping-cart"></i> Cart
             </li>
