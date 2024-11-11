@@ -1,7 +1,9 @@
+import { useValue } from "../../context/userContext";
 import style from "./navbar.module.css";
 import { Link, Outlet } from "react-router-dom";
 
 function Navbar() {
+  const {isLoggedIn} = useValue();
   return (
     <>
       <nav className={style.navbar}>
@@ -14,11 +16,11 @@ function Navbar() {
               <i className="fi fi-ss-house-chimney"></i> Home
             </li>
           </Link>
-          <Link to={"/orders"}>
+          {isLoggedIn && <Link to={"/orders"}>
             <li>
               <i className="fi fi-ss-basket-shopping-simple"></i> My Orders
             </li>
-          </Link>
+          </Link>}
           <Link to={"/cart"}>
             <li>
               <i className="fi fi-ss-shopping-cart"></i> Cart
