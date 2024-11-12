@@ -5,8 +5,9 @@ import Home from "./pages/home/Home";
 import Cart from "./pages/cart/Cart";
 import Order from "./pages/order/Order";
 import AuthPage from "./pages/auth/authPage";
-import UserContextProvider from "./context/userContext";
+import ProductContextProvider from "./context/productContext";
 import ProtectedRoute from "./components/protectedRoute/protectedRoute";
+import UserContextProvider from "./context/userContext";
 
 function App() {
   const browserRouter = createBrowserRouter([
@@ -39,9 +40,11 @@ function App() {
   ]);
   return (
     <div className="App">
-      <UserContextProvider>
-        <RouterProvider router={browserRouter} />
-      </UserContextProvider>
+      <ProductContextProvider>
+        <UserContextProvider>
+          <RouterProvider router={browserRouter} />
+        </UserContextProvider>
+      </ProductContextProvider>
     </div>
   );
 }

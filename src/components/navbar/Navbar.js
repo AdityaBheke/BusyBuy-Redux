@@ -1,9 +1,10 @@
-import { useValue } from "../../context/userContext";
+import { useUserValue } from "../../context/userContext";
 import style from "./navbar.module.css";
 import { Link, Outlet } from "react-router-dom";
 
 function Navbar() {
-  const {isLoggedIn} = useValue();
+  
+  const {isLoggedIn} = useUserValue();
   return (
     <>
       <nav className={style.navbar}>
