@@ -12,7 +12,7 @@ function ProductContextProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [priceRange, setPriceRange] = useState(100000);
+  const [priceRange, setPriceRange] = useState(1000);
   const [filterCategories, setFilterCategories] = useState([]);
   const [searchText, setSearchText] = useState("");
 
@@ -35,11 +35,6 @@ function ProductContextProvider({ children }) {
   useEffect(() => {
     fetchProducts();
   }, []);
-
-  // Initially setting all products as a filtered products
-  useEffect(() => {
-    setFilteredProducts(products);
-  }, [products]);
 
   // Function to handle category selection
   const handleCategorySelect = (checked, selectedCategory) => {

@@ -9,6 +9,14 @@
     color: var(--light);
     border: none;
     border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.filterButton:hover{
+    background-color: var(--dark);
+}
+.filterButton:active{
+    background-color: var(--accent);
 }
 .filterButton i{
     display: flex;

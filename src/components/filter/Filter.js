@@ -11,12 +11,12 @@ function Filter(){
 
     return <>
     <div className={styles.filterContainer}>
-        <button onClick={toggleFilter} className={styles.filterButton}><i className="fi fi-rr-settings-sliders"></i></button>
+        <button onClick={toggleFilter} className={styles.filterButton}>{isOpen?<i className="fi fi-rr-cross-circle"></i>:<i className="fi fi-rr-settings-sliders"></i>}</button>
         <div className={`${styles.filters} ${isOpen?styles.show:styles.hide}`}>
             <h3>Filter</h3>
             <div className={styles.rangeGroup}>
-                <label>Price: {priceRange}</label>
-                <input type="range" min={0} max={100000} step={5000} value={priceRange} onChange={(e)=>{setPriceRange(e.target.value)}}/>
+                <label>Price: {Math.round(priceRange*100)/100}</label>
+                <input type="range" min={0} max={1000} step={10} value={priceRange} onChange={(e)=>{setPriceRange(e.target.value)}}/>
             </div>
             <h3>Category</h3>
             {
