@@ -8,7 +8,7 @@ function Order(){
     {orders.length>0 && <div className={styles.main}>
         <h1>Your Orders</h1>
         <div className={styles.orderContainer}>
-            {orders.map((orderItem)=><OrderItem orderItem={orderItem}/>)}
+            {orders.map((orderItem)=><OrderItem key={orderItem.id} orderItem={orderItem}/>)}
         </div>
     </div>}
     {orders.length===0 && <h1 className={styles.emptyPageMessage}>No orders found</h1>}
