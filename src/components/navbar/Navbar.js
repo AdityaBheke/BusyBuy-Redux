@@ -4,7 +4,8 @@ import { Link, Outlet } from "react-router-dom";
 
 function Navbar() {
   
-  const {isLoggedIn} = useUserValue();
+  const {isLoggedIn, handleLogout} = useUserValue();
+  
   return (
     <>
       <nav className={style.navbar}>
@@ -27,9 +28,9 @@ function Navbar() {
               <i className="fi fi-ss-shopping-cart"></i> Cart
             </li>
           </Link>
-          <Link to={"/signin"}>
+          <Link to={isLoggedIn?"/":"/signin"} onClick={handleLogout}>
             <li>
-              <i className="fi fi-br-exit"></i> Login
+              <i className="fi fi-br-exit"></i> {isLoggedIn?"Logout":"Login"}
             </li>
           </Link>
         </ul>

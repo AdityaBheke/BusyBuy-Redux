@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 const userContext = createContext();
 
@@ -8,23 +9,53 @@ const useUserValue = ()=>{
 }
 
 function UserContextProvider({children}) {
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
-    const [user, setUser] = useState({id:"user1"});
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState({});
     const [cart, setCart] = useState([]);
     const [grandTotal, setGrandTotal] = useState(0);
     const [orders, setOrders] = useState([]);
+    const auth = getAuth();
 
-    useEffect(()=>{
-        setUser({id:"user1"})
-    },[])
-    
+    // useEffect(()=>{
+    //     setUser({id:"user1"})
+    // },[])
+    // Function to handle signUp
+    const handleSignUp = async(email, password)=>{
+        try {
+            const registeredUser = await createUserWithEmailAndPassword(auth, email, password);
+            console.log("Reg user", registeredUser);
+            return true
+        } catch (error) {
+            console.log(error.message);
+            return false
+        }
+    }
+    // Function to handle signIn
+    const handleSignIn = async(email, password)=>{
+        try {
+            const signedInUser = await signInWithEmailAndPassword(auth, email, password);
+            setUser(signedInUser);
+            console.log("Signed user",signedInUser);
+            setIsLoggedIn(true);
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+    const handleLogout = ()=>{
+        if (isLoggedIn) {
+          setIsLoggedIn(false);
+          setUser({});
+        }
+      }
     // Function to add product to cart
     const handleAddToCart = (product)=>{
         const isAvailable = cart.find((cartItem)=>cartItem.productId===product.id);
         if (isAvailable) {
             setCart(cart.map((cartItem)=>cartItem.productId===product.id?{...cartItem, quantity: cartItem.quantity+1}:cartItem))
         } else {
-            setCart([...cart, {userId: user.id, productId: product.id, title: product.title, description: product.description, image: product.image, price:product.price, quantity: 1}])
+            setCart([...cart, {userId: user.uid, productId: product.id, title: product.title, description: product.description, image: product.image, price:product.price, quantity: 1}])
         }
     }
     // function to remove product from cart
@@ -54,17 +85,33 @@ function UserContextProvider({children}) {
     // function to handle purchase
     function handlePurchase() {
         if (cart.length>0) {
-            setOrders([...orders, {userId:user.id, myOrder: cart, grandTotal: grandTotal, date: new Date()}]);
+            setOrders([...orders, {userId:user.uid, myOrder: cart, grandTotal: grandTotal, date: new Date()}]);
             setCart([]);
         }
-        console.log(orders);
-        
     }
 
 
-    return(<userContext.Provider value={{isLoggedIn, setIsLoggedIn, cart, handleAddToCart, handleRemoveCart, increaseQuantity, decreaseQuantity, grandTotal, handlePurchase, orders}}>
+    return (
+      <userContext.Provider
+        value={{
+          isLoggedIn,
+          setIsLoggedIn,
+          cart,
+          handleAddToCart,
+          handleRemoveCart,
+          increaseQuantity,
+          decreaseQuantity,
+          grandTotal,
+          handlePurchase,
+          orders,
+          handleSignUp,
+          handleSignIn,
+          handleLogout
+        }}
+      >
         {children}
-    </userContext.Provider>)
+      </userContext.Provider>
+    );
 }
 
 export {useUserValue};
