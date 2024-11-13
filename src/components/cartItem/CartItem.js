@@ -1,24 +1,27 @@
+import { useUserValue } from "../../context/userContext";
 import styles from "./cartItem.module.css";
-function CartItem() {
+function CartItem(props) {
+  const {increaseQuantity, decreaseQuantity, handleRemoveCart} = useUserValue();
+  const {productId, title, image, price, quantity} = props.cartItem;
   return (
     <div className={styles.card}>
       <img
-        src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+        src={image}
         alt="product-image"
         className={styles.thumbnail}
       />
 
-      <span className={styles.title}>Product Title</span>
+      <span className={styles.title}>{title}</span>
       <div className={styles.priceContainer}>
-        <span className={styles.price}>$00.00</span>
+        <span className={styles.price}>${price}</span>
         <div className={styles.quantityGroup}>
-          <button className={styles.changeQnty}><i className="fi fi-sr-add"></i></button>
-          <span className={styles.quantity}>00</span>
-          <button className={styles.changeQnty}><i className="fi fi-sr-minus-circle"></i></button>
+          <button className={styles.changeQnty} onClick={()=>{increaseQuantity(productId)}}><i className="fi fi-sr-add"></i></button>
+          <span className={styles.quantity}>{quantity}</span>
+          <button className={styles.changeQnty} onClick={()=>{decreaseQuantity(productId)}}><i className="fi fi-sr-minus-circle"></i></button>
         </div>
       </div>
 
-      <button className={styles.remove}>Remove from cart</button>
+      <button className={styles.remove} onClick={()=>{handleRemoveCart(productId)}}>Remove from cart</button>
     </div>
   );
 }

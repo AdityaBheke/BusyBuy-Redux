@@ -1,8 +1,9 @@
+import { useUserValue } from "../../context/userContext";
 import styles from "./productCard.module.css";
 
 function ProductCard(props) {
   const {title, price, image} = props.product;
-  
+  const {handleAddToCart} = useUserValue();
   return (
     <div className={styles.card}>
       <img
@@ -15,7 +16,7 @@ function ProductCard(props) {
         <span className={styles.price}>${price}</span>
       </div>
 
-      <button className={styles.addToCart}>Add to cart</button>
+      <button className={styles.addToCart} onClick={()=>{handleAddToCart(props.product)}}>Add to cart</button>
     </div>
   );
 }
