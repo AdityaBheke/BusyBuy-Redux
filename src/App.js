@@ -6,7 +6,6 @@ import Cart from "./pages/cart/Cart";
 import Order from "./pages/order/Order";
 import AuthPage from "./pages/auth/authPage";
 import ProductContextProvider from "./context/productContext";
-import ProtectedRoute from "./components/protectedRoute/protectedRoute";
 import UserContextProvider from "./context/userContext";
 
 function App() {
@@ -21,11 +20,11 @@ function App() {
         },
         {
           path: "cart",
-          element: <ProtectedRoute><Cart/></ProtectedRoute>,
+          element: <Cart/>,
         },
         {
           path: "orders",
-          element: <ProtectedRoute><Order/></ProtectedRoute>,
+          element: <Order/>,
         },
         {
           path: "signin",

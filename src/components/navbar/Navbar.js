@@ -23,11 +23,11 @@ function Navbar() {
               <i className="fi fi-ss-basket-shopping-simple"></i> My Orders
             </li>
           </Link>}
-          <Link to={"/cart"}>
+          {isLoggedIn && <Link to={"/cart"}>
             <li>
               <i className="fi fi-ss-shopping-cart"></i> Cart
             </li>
-          </Link>
+          </Link>}
           <Link to={isLoggedIn?"/":"/signin"} onClick={handleLogout}>
             <li>
               <i className="fi fi-br-exit"></i> {isLoggedIn?"Logout":"Login"}
