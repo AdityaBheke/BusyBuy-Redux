@@ -11,7 +11,7 @@ function CartItem(props) {
         className={styles.thumbnail}
       />
 
-      <span className={styles.title}>{title}</span>
+      <span className={styles.title}>{title.length>30?title.substring(0,30)+"...":title}</span>
       <div className={styles.priceContainer}>
         <span className={styles.price}>${price}</span>
         <div className={styles.quantityGroup}>

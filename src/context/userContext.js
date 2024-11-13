@@ -48,13 +48,17 @@ function UserContextProvider({children}) {
 
     // calculate grandTotal
     useEffect(()=>{
-        setGrandTotal(cart.reduce((total,cartItem)=>{return total+(cartItem.price*cartItem.quantity)},0))
+        setGrandTotal(Math.round((cart.reduce((total,cartItem)=>{return total+(cartItem.price*cartItem.quantity)},0))*100)/100)
     },[cart]);
 
     // function to handle purchase
     function handlePurchase() {
-        setOrders([...orders, {userId:user.id, myOrder: cart}]);
-        setCart([]);
+        if (cart.length>0) {
+            setOrders([...orders, {userId:user.id, myOrder: cart, grandTotal: grandTotal, date: new Date()}]);
+            setCart([]);
+        }
+        console.log(orders);
+        
     }
 
 

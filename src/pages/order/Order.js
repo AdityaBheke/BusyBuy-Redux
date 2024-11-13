@@ -1,14 +1,17 @@
 import OrderItem from "../../components/orderItem/OrderItem";
+import { useUserValue } from "../../context/userContext";
 import styles from "./order.module.css";
 
 function Order(){
-    return <div className={styles.main}>
+    const {orders} = useUserValue();
+    return (<>
+    {orders.length>0 && <div className={styles.main}>
         <h1>Your Orders</h1>
         <div className={styles.orderContainer}>
-            <OrderItem/>
-            <OrderItem/>
-            <OrderItem/>
+            {orders.map((orderItem)=><OrderItem orderItem={orderItem}/>)}
         </div>
-    </div>
+    </div>}
+    {orders.length===0 && <h1 className={styles.emptyPageMessage}>No orders found</h1>}
+    </>);
 }
 export default Order;

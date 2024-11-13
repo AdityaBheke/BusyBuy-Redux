@@ -1,8 +1,9 @@
 import styles from "./orderItem.module.css";
 
-function OrderItem(){
+function OrderItem(props){
+    const {myOrder, grandTotal, date} = props.orderItem;
     return <div className={styles.orderItem}>
-        <h2>Ordered on: yyyy-mm-dd</h2>
+        <h2>Ordered on: {date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()}</h2>
         <table>
             <thead>
                 <tr>
@@ -13,17 +14,17 @@ function OrderItem(){
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Product Title</td>
-                    <td>$ 00.00</td>
-                    <td>0</td>
-                    <td>$ 00.00</td>
-                </tr>
+                {myOrder.map((order)=>(<tr>
+                    <td>{order.title.length>30?order.title.substring(0,30)+"...":order.title}</td>
+                    <td>$ {order.price}</td>
+                    <td>{order.quantity}</td>
+                    <td>$ {Number(order.price)*Number(order.quantity)}</td>
+                </tr>))}
             </tbody>
             <tfoot>
                 <tr>
                     <td colSpan={3}></td>
-                    <td>$ 00.00</td>
+                    <td>$ {grandTotal}</td>
                 </tr>
             </tfoot>
         </table>
