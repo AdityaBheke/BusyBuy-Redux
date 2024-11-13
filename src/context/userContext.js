@@ -22,8 +22,7 @@ function UserContextProvider({children}) {
     // Function to handle signUp
     const handleSignUp = async(email, password)=>{
         try {
-            const registeredUser = await createUserWithEmailAndPassword(auth, email, password);
-            console.log("Reg user", registeredUser);
+            await createUserWithEmailAndPassword(auth, email, password);
             return true
         } catch (error) {
             console.log(error.message);
@@ -35,7 +34,6 @@ function UserContextProvider({children}) {
         try {
             const signedInUser = await signInWithEmailAndPassword(auth, email, password);
             setUser(signedInUser);
-            console.log("Signed user",signedInUser);
             setIsLoggedIn(true);
             return true;
         } catch (error) {
@@ -43,6 +41,7 @@ function UserContextProvider({children}) {
             return false;
         }
     }
+    // Function to handle logout
     const handleLogout = ()=>{
         if (isLoggedIn) {
           setIsLoggedIn(false);

@@ -13,7 +13,6 @@ function AuthPage({type}){
         e.preventDefault();
         if (reg) {
             const result = await handleSignUp(email, password)
-            console.log(result);
             result && navigate("/signin")
         } else {
             const result = await handleSignIn(email, password)
