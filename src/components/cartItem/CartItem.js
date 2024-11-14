@@ -1,8 +1,20 @@
+import { useState } from "react";
 import { useUserValue } from "../../context/userContext";
 import styles from "./cartItem.module.css";
 function CartItem(props) {
+  const [buttonText, setButtonText] = useState("Remove from cart")
   const {increaseQuantity, decreaseQuantity, handleRemoveCart} = useUserValue();
   const {productId, title, image, price, quantity} = props.cartItem;
+  const handleRemove = async()=>{
+    setButtonText("Removing")
+    try {
+      await handleRemoveCart(productId)
+    } catch (error) {
+      console.log(error.message);
+    }finally{
+      setButtonText("Remove from cart")
+    }
+  }
   return (
     <div className={styles.card}>
       <img
@@ -21,7 +33,7 @@ function CartItem(props) {
         </div>
       </div>
 
-      <button className={styles.remove} onClick={()=>{handleRemoveCart(productId)}}>Remove from cart</button>
+      <button className={styles.remove} onClick={handleRemove}>{buttonText}</button>
     </div>
   );
 }
