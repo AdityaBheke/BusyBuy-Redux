@@ -12,12 +12,19 @@ function AuthPage({type}){
     const handleSubmit = async(e)=>{
         e.preventDefault();
         if (reg) {
-            const result = await handleSignUp(email, password)
-            result && navigate("/signin")
+            const result = await handleSignUp(email, password);
+            result && navigate("/signin");
+            clearForm();
         } else {
             const result = await handleSignIn(email, password)
             result && navigate("/")
+            clearForm()
         }
+    }
+    const clearForm = ()=>{
+        setEmail("");
+        setPassword("");
+        setName("");
     }
     const handleOnChange = (e)=>{
         if (e.target.id==='name') {
