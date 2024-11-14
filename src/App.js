@@ -7,6 +7,8 @@ import Order from "./pages/order/Order";
 import AuthPage from "./pages/auth/authPage";
 import ProductContextProvider from "./context/productContext";
 import UserContextProvider from "./context/userContext";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const browserRouter = createBrowserRouter([
@@ -39,6 +41,7 @@ function App() {
   ]);
   return (
     <div className="App">
+      <ToastContainer autoClose={2000}/>
       <ProductContextProvider>
         <UserContextProvider>
           <RouterProvider router={browserRouter} />

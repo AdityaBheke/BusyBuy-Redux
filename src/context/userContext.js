@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { db } from "../config/firebase.config";
-import { addDoc, collection, deleteDoc, doc, query, updateDoc, where, onSnapshot, getDocs, orderBy } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, query, updateDoc, where, onSnapshot, getDocs, orderBy, Timestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
 // import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 const userContext = createContext();
@@ -31,7 +32,7 @@ function UserContextProvider({children}) {
         onSnapshot(query(collection(db, 'carts'), where("userId","==", user.uid)),(snapshot)=>{
             setCart(snapshot.docs.map((doc)=>{return{id:doc.id,...doc.data()}}));
         });
-        onSnapshot(query(collection(db, 'orders'), where("userId","==", user.uid)),orderBy("date","desc"),(snapshot)=>{
+        onSnapshot(query(collection(db, 'orders'), where("userId","==", user.uid),orderBy("date", "desc")),(snapshot)=>{
             setOrders(snapshot.docs.map((doc)=>{return{id:doc.id,...doc.data()}}));
         })
     },[user])
@@ -39,9 +40,11 @@ function UserContextProvider({children}) {
     const handleSignUp = async(email, password)=>{
         try {
             await createUserWithEmailAndPassword(auth, email, password);
+            toast.success("Welcome aboard! Your account is ready.");
             return true
         } catch (error) {
             console.log(error.message);
+            toast.error("Something went wrong!");
             return false
         }
     }
@@ -51,10 +54,12 @@ function UserContextProvider({children}) {
             const signedInUser = await signInWithEmailAndPassword(auth, email, password);
             setUser(signedInUser.user);
             setIsLoggedIn(true);
+            toast.success("Welcome! You’re signed in.");
             localStorage.setItem("user",JSON.stringify(signedInUser.user));
             return true;
         } catch (error) {
             console.log(error);
+            toast.error("Oops! Check your credentials and try again.")
             return false;
         }
     }
@@ -64,6 +69,7 @@ function UserContextProvider({children}) {
           setIsLoggedIn(false);
           localStorage.setItem("user",JSON.stringify({uid:""}));
           setUser({uid:""});
+          toast.success("You’ve been logged out. See you soon!")
         }
       }
     // Function to add product to cart
@@ -77,12 +83,14 @@ function UserContextProvider({children}) {
             // setCart([...cart, newItem]);
             await addDoc(collection(db, 'carts'),newItem)
         }
+        toast.success("Item added to cart.")
     }
     // function to remove product from cart
     const handleRemoveCart = async(productId)=>{
         // setCart(cart.filter((cartItem)=>cartItem.productId!==productId))
         const snapshot = await getDocs(query(collection(db, 'carts'), where("userId","==",user.uid), where("productId","==",productId)))
         snapshot.forEach(async(doc)=>await deleteDoc(doc.ref))
+        toast.success("Item removed from cart.")
     }
     // function to increase quantity
     const increaseQuantity = async(productId)=>{
@@ -103,9 +111,10 @@ function UserContextProvider({children}) {
         // }).filter((cartItem)=>!(cartItem.productId===productId&&cartItem.quantity===0)))
         const availableItem = cart.find((cartItem)=>cartItem.productId===productId);
         if (availableItem && availableItem.quantity>1) {
-            await updateDoc(doc(db, 'carts',availableItem.id),{...availableItem, quantity: availableItem.quantity-1})
+            await updateDoc(doc(db, 'carts',availableItem.id),{...availableItem, quantity: availableItem.quantity-1});
         }else if(availableItem && availableItem.quantity===1){
-            await deleteDoc(doc(db, 'carts', availableItem.id))
+            await deleteDoc(doc(db, 'carts', availableItem.id));
+            toast.warning("Item removed as quantity reached zero.");
         }
     }
 
@@ -118,10 +127,11 @@ function UserContextProvider({children}) {
     async function handlePurchase() {
         if (cart.length>0) {
             // setOrders([...orders, {userId:user.uid, myOrder: cart, grandTotal: grandTotal, date: new Date()}]);
-            await addDoc(collection(db, "orders"), {userId:user.uid, myOrder: cart, grandTotal: grandTotal, date: new Date()})
+            await addDoc(collection(db, "orders"), {userId:user.uid, myOrder: cart, grandTotal: grandTotal, date: Timestamp.fromDate(new Date())})
             const snapshot = await getDocs(query(collection(db, 'carts'), where("userId","==",user.uid)))
             snapshot.forEach(async(doc)=>await deleteDoc(doc.ref))
             // setCart([]);
+            toast.success("Order placed! Thank you for shopping with us!")
         }
     }
 
