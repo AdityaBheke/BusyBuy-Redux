@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { db } from "../config/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
 const productContext = createContext();
@@ -15,21 +21,28 @@ function ProductContextProvider({ children }) {
   const [priceRange, setPriceRange] = useState(1000);
   const [filterCategories, setFilterCategories] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   // Function to fetch products from firebase db
   const fetchProducts = async () => {
-    const snapShot = await getDocs(collection(db, "products"));
-    const docs = snapShot.docs.map((product) => {
-      return { id: product.id, ...product.data() };
-    });
-    const ctg = [];
-    docs.forEach((product) => {
-      if (!ctg.includes(product.category)) {
-        ctg.push(product.category);
-      }
-    });
-    setCategories(ctg);
-    setProducts(docs);
+    try {
+      const snapShot = await getDocs(collection(db, "products"));
+      const docs = snapShot.docs.map((product) => {
+        return { id: product.id, ...product.data() };
+      });
+      const ctg = [];
+      docs.forEach((product) => {
+        if (!ctg.includes(product.category)) {
+          ctg.push(product.category);
+        }
+      });
+      setCategories(ctg);
+      setProducts(docs);
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setIsLoading(false)
+    }
   };
   // Initial fetching of products
   useEffect(() => {
@@ -41,7 +54,9 @@ function ProductContextProvider({ children }) {
     if (checked && !filterCategories.includes(selectedCategory)) {
       setFilterCategories([...filterCategories, selectedCategory]);
     } else {
-      setFilterCategories(filterCategories.filter((ctg)=>ctg!==selectedCategory))
+      setFilterCategories(
+        filterCategories.filter((ctg) => ctg !== selectedCategory)
+      );
     }
   };
 
@@ -51,17 +66,23 @@ function ProductContextProvider({ children }) {
       return (
         product.title.toLowerCase().includes(searchText.toLocaleLowerCase()) &&
         product.price <= priceRange &&
-        (filterCategories.includes(product.category) || filterCategories.length===0)
+        (filterCategories.includes(product.category) ||
+          filterCategories.length === 0)
       );
     });
     return result;
   };
-  const filterAllProducts = useCallback(searchAndFilter,[products, priceRange, searchText, filterCategories]);
+  const filterAllProducts = useCallback(searchAndFilter, [
+    products,
+    priceRange,
+    searchText,
+    filterCategories,
+  ]);
 
-  useEffect(()=>{
-    setFilteredProducts(filterAllProducts())
-  },[filterAllProducts])
-  
+  useEffect(() => {
+    setFilteredProducts(filterAllProducts());
+  }, [filterAllProducts]);
+
   return (
     <productContext.Provider
       value={{
@@ -72,6 +93,7 @@ function ProductContextProvider({ children }) {
         priceRange,
         searchText,
         setSearchText,
+        isLoading
       }}
     >
       {children}
