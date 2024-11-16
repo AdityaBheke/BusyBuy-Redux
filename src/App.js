@@ -9,12 +9,14 @@ import ProductContextProvider from "./context/productContext";
 import UserContextProvider from "./context/userContext";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import ErrorPage from "./pages/error/errorPage";
 
 function App() {
   const browserRouter = createBrowserRouter([
     {
       path: "/",
       element: <Navbar />,
+      errorElement:<ErrorPage/>,
       children: [
         {
           index: true,
