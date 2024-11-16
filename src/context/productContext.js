@@ -7,13 +7,15 @@ import {
 } from "react";
 import { db } from "../config/firebase.config";
 import { collection, getDocs } from "firebase/firestore";
-const productContext = createContext();
 
+// Product context to manage products and implement search and filter on products
+const productContext = createContext();
+// Custom context to access values from product context
 const useProductValue = () => {
   const value = useContext(productContext);
   return value;
 };
-
+// Product context provider
 function ProductContextProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -30,6 +32,7 @@ function ProductContextProvider({ children }) {
       const docs = snapShot.docs.map((product) => {
         return { id: product.id, ...product.data() };
       });
+      // Getting list of all distinct categories from product list
       const ctg = [];
       docs.forEach((product) => {
         if (!ctg.includes(product.category)) {
@@ -78,7 +81,7 @@ function ProductContextProvider({ children }) {
     searchText,
     filterCategories,
   ]);
-
+  // setting filtered products received from Search and filter function
   useEffect(() => {
     setFilteredProducts(filterAllProducts());
   }, [filterAllProducts]);
