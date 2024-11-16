@@ -43,7 +43,7 @@ function App() {
   ]);
   return (
     <div className="App">
-      <ToastContainer autoClose={2000}/>
+      <ToastContainer autoClose={2000} pauseOnHover={false} closeOnClick/>
       <ProductContextProvider>
         <UserContextProvider>
           <RouterProvider router={browserRouter} />
