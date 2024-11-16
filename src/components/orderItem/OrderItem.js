@@ -16,7 +16,7 @@ function OrderItem(props){
             </thead>
             <tbody>
                 {myOrder.map((order)=>(<tr key={order.id}>
-                    <td>{order.title.length>30?order.title.substring(0,30)+"...":order.title}</td>
+                    <td title={order.title}>{order.title.length>30?order.title.substring(0,30)+"...":order.title}</td>
                     <td>$ {order.price}</td>
                     <td>{order.quantity}</td>
                     <td>$ {Number(order.price)*Number(order.quantity)}</td>

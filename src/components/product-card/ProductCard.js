@@ -23,7 +23,7 @@ function ProductCard(props) {
     }
   };
   return (
-    <div className={styles.card}>
+    <div className={styles.card} title={title}>
       <img
         src={image}
         alt="product-image"

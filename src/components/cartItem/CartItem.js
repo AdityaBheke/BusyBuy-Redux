@@ -16,13 +16,12 @@ function CartItem(props) {
     }
   }
   return (
-    <div className={styles.card}>
+    <div className={styles.card} title={title}>
       <img
         src={image}
         alt="product-image"
         className={styles.thumbnail}
       />
-
       <span className={styles.title}>{title.length>30?title.substring(0,30)+"...":title}</span>
       <div className={styles.priceContainer}>
         <span className={styles.price}>${price}</span>
@@ -32,7 +31,6 @@ function CartItem(props) {
           <button className={styles.changeQnty} onClick={()=>{decreaseQuantity(productId)}}><i className="fi fi-sr-minus-circle"></i></button>
         </div>
       </div>
-
       <button className={styles.remove} onClick={handleRemove}>{buttonText}</button>
     </div>
   );
