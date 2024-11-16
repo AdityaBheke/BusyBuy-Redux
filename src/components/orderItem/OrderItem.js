@@ -2,7 +2,7 @@ import styles from "./orderItem.module.css";
 
 function OrderItem(props){
     const {myOrder, grandTotal, date} = props.orderItem;
-    const orderDate = new Date(Date(date));
+    const orderDate = new Date(date.seconds*1000);
     return <div className={styles.orderItem}>
         <h2>Ordered on: {orderDate.getDate()+"-"+(orderDate.getMonth()+1)+"-"+orderDate.getFullYear()}</h2>
         <table>
