@@ -1,6 +1,6 @@
 # Busy-Buy
 
-Busy-Buy is a feature-rich e-commerce web application built using React, Firebase, and Context API. It provides users with a seamless shopping experience, including product filtering, order management, and user authentication.
+Busy-Buy is a feature-rich e-commerce web application built using React and Firebase. It provides users with a seamless shopping experience, including product filtering, order management, cart management and user authentication.
 
 ## Live Demo
 
