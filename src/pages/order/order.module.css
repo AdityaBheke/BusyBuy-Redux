@@ -24,3 +24,29 @@
     align-items: center;
     margin-bottom: 4rem;
 }
+@media screen and (max-width: 1500px) {
+  
+}
+@media screen and (max-width: 1200px) {
+  .orderContainer{
+    width: 75%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .orderContainer{
+    width: 80%;
+  }
+}
+@media screen and (max-width: 750px) {
+  .orderContainer{
+    width: 85%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .orderContainer{
+    width: 90%;
+  }
+}
+@media screen and (max-width: 450px) {
+  
+}

@@ -1,5 +1,4 @@
 .card{
-    /* width: 300px; */
     padding: 2rem;
     display: flex;
     flex-direction: column;
@@ -16,10 +15,11 @@
 .cardInfo{
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 1rem;
+    flex-grow: 1;
 }
 .title{
-    min-height: 70px;
     font-size: 1.3rem;
     font-weight: 400;
 }

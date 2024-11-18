@@ -1,5 +1,4 @@
 .navbar{
-    /* height: 10vh; */
     width: 100%;
     background-color: var(--accent);
     display: flex;
@@ -31,4 +30,32 @@
 }
 .navbar ul a:hover{
     background-color: var(--dark);
+}
+
+@media screen and (max-width: 1500px) {
+  
+}
+@media screen and (max-width: 1200px) {
+  
+}
+@media screen and (max-width: 1000px) {
+  
+}
+@media screen and (max-width: 750px) {
+    .navbar{
+        flex-direction: column;
+        justify-content: space-evenly;
+        gap: 1rem;
+      }
+      .navbar ul{
+        width: 100%;
+        justify-content: space-evenly;
+        gap: 0.2rem;
+      }
+}
+@media screen and (max-width: 600px) {
+  
+}
+@media screen and (max-width: 450px) {
+
 }

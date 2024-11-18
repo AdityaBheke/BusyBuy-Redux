@@ -25,7 +25,10 @@ function Cart(){
             {cart.map((cartItem, index)=><CartItem key={index} cartItem={cartItem}/>)}
         </div>
         <div className={styles.totalContainer}>
-            <div className={styles.total}>Grand Total <br/>$ {grandTotal}</div>
+            <div className={styles.total}>
+                <span className={styles.totalHead}>Grand Total</span>
+                <span className={styles.totalAmount}>${grandTotal}</span>
+            </div>
             <button className={styles.purchase} onClick={handleCheckout}>{purchaseButton}</button>
         </div>
     </div>}

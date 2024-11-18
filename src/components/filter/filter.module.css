@@ -26,7 +26,7 @@
 .filters{
     position: absolute;
     top: 110%;
-    width: 200px;
+    width: max-content;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -62,4 +62,20 @@
 }
 .show{
     display: flex;
+}
+
+@media screen and (max-width: 1500px) {
+}
+@media screen and (max-width: 1200px) {
+}
+@media screen and (max-width: 1000px) {
+}
+@media screen and (max-width: 750px) {
+    .filters{
+        right: 0;
+    }
+}
+@media screen and (max-width: 600px) {
+}
+@media screen and (max-width: 450px) {
 }

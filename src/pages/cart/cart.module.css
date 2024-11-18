@@ -19,12 +19,12 @@
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 2rem;
     row-gap: 2rem;
-    margin-bottom: 4rem;
+    margin-bottom: 10rem;
     margin-top: 2rem;
 }
 .totalContainer{
     position: fixed;
-    top: 40%;
+    bottom: 35%;
     left: 0;
     padding: 3rem 2rem;
     display: flex;
@@ -41,6 +41,10 @@
 .total{
     font-size: 1.5rem;
     font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 .purchase{
     padding: 0.8rem;
@@ -60,4 +64,41 @@
 .purchase:active{
     background-color: var(--neutral);
     color: var(--dark);
+}
+
+@media screen and (max-width: 1500px) {
+  
+}
+@media screen and (max-width: 1200px) {
+  .productContainer{
+    width: 80%;
+  }
+}
+@media screen and (max-width: 1000px) {
+    .totalContainer{
+        bottom: 0;
+        width: 100%;
+        flex-direction: row;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 1rem;
+    }
+    .total{
+        flex-direction: row;
+        gap: 2rem;
+    }
+}
+@media screen and (max-width: 750px) {
+    .productContainer {
+        width: 85%;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media screen and (max-width: 600px) {
+    .productContainer {
+        width: 90%;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media screen and (max-width: 450px) {
+  
 }
