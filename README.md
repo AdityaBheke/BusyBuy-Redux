@@ -4,7 +4,7 @@ Busy-Buy is a feature-rich e-commerce web application built using React and Fire
 
 ## Live Demo
 
-[Busy-Buy Live Application](#)
+[🔗 Live Preview](https://adityab-busybuy.netlify.app/)
 
 ## Features
 
@@ -48,8 +48,8 @@ Busy-Buy is a feature-rich e-commerce web application built using React and Fire
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/adityabheke/busy-buy.git
-   cd busy-buy
+   git clone https://github.com/AdityaBheke/BusyBuy.git
+   cd BusyBuy
 2. Install dependecies:
     ```bash
     npm install
