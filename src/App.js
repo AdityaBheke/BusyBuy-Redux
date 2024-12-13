@@ -5,11 +5,12 @@ import Home from "./pages/home/Home";
 import Cart from "./pages/cart/Cart";
 import Order from "./pages/order/Order";
 import AuthPage from "./pages/auth/authPage";
-import ProductContextProvider from "./context/productContext";
-import UserContextProvider from "./context/userContext";
+// import ProductContextProvider from "./context/productContext";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ErrorPage from "./pages/error/errorPage";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 function App() {
   const browserRouter = createBrowserRouter([
@@ -44,11 +45,9 @@ function App() {
   return (
     <div className="App">
       <ToastContainer autoClose={2000} pauseOnHover={false} closeOnClick/>
-      <ProductContextProvider>
-        <UserContextProvider>
+      <Provider store={store}>
           <RouterProvider router={browserRouter} />
-        </UserContextProvider>
-      </ProductContextProvider>
+      </Provider>
     </div>
   );
 }

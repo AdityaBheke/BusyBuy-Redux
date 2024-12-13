@@ -1,11 +1,12 @@
-import { useUserValue } from "../../context/userContext";
+import { useSelector } from "react-redux";
 import style from "./navbar.module.css";
 import { Link, Outlet } from "react-router-dom";
-
+import { userSelector } from "../../redux/slices/userSlice";
+import { userActions } from "../../redux/slices/userSlice";
+import { useDispatch } from "react-redux";
 function Navbar() {
-  
-  const {isLoggedIn, handleLogout} = useUserValue();
-  
+  const {isLoggedIn} = useSelector(userSelector);
+  const dispatch = useDispatch();
   return (
     <>
       <nav className={style.navbar}>
@@ -28,7 +29,7 @@ function Navbar() {
               <i className="fi fi-ss-shopping-cart"></i> Cart
             </li>
           </Link>}
-          <Link to={isLoggedIn?"/":"/signin"} onClick={handleLogout}>
+          <Link to={isLoggedIn?"/":"/signin"} onClick={()=>{dispatch(userActions.logoutUser())}}>
             <li>
               <i className="fi fi-br-exit"></i> {isLoggedIn?"Logout":"Login"}
             </li>

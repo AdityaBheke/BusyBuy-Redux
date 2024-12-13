@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./auth.module.css";
-import { useUserValue } from "../../context/userContext";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { handleSignUpThunk, handleSignInThunk } from "../../redux/slices/userSlice";
 function AuthPage({type}){
     // const reg = type==="signup"?true:false;
     const [reg, setReg] = useState(true);
@@ -9,8 +10,8 @@ function AuthPage({type}){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [buttonText, setButtonText] = useState("");
-    const {handleSignUp, handleSignIn} = useUserValue();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     useEffect(()=>{
         if (type==='signup') {
             setReg(true);
@@ -25,22 +26,20 @@ function AuthPage({type}){
         try {
             setButtonText(<i className="fi fi-rr-loading"></i>)
             if (reg) {
-                const result = await handleSignUp(email, password);
+                const result = await dispatch(handleSignUpThunk({email, password})).unwrap();
                 result && navigate("/signin");
                 clearForm();
             } else {
-                const result = await handleSignIn(email, password)
-                result && navigate("/")
+                const result = await dispatch(handleSignInThunk({email, password})).unwrap();
+                if (result) {
+                    navigate("/")
+                }
                 clearForm()
             }
         } catch (error) {
-            
+            console.log("Error in page comp",error);
         }finally{
-            if (reg) {
-                setButtonText("Sign Up")
-            } else {
-                setButtonText("Sign In")
-            }
+            setButtonText(reg ? "Sign Up" : "Sign In");
         }
     }
     const clearForm = ()=>{
