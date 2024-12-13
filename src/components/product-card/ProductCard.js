@@ -1,18 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import { useUserValue } from "../../context/userContext";
+// import { useUserValue } from "../../context/userContext";
 import styles from "./productCard.module.css";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../redux/slices/userSlice";
 
 function ProductCard(props) {
   const {title, price, image} = props.product;
-  const {handleAddToCart, isLoggedIn} = useUserValue();
+  const { isLoggedIn} = useSelector(userSelector);
+  // const dispatch = useDispatch();
   const [buttonText, setButtonText] = useState(<>Add to Cart</>)
   const navigate = useNavigate();
   const handleAdd = async () => {
     try {
       setButtonText(<i className="fi fi-rr-loading"></i>);
       if (isLoggedIn) {
-        await handleAddToCart(props.product);
+        // await handleAddToCart(props.product);
       } else {
         navigate("/signin");
       }

@@ -1,9 +1,14 @@
 import { useState } from "react";
 import styles from "./filter.module.css";
-import { useProductValue } from "../../context/productContext";
+// import { useProductValue } from "../../context/productContext";
+import { useDispatch, useSelector } from "react-redux";
+import { productActions, productSelector } from "../../redux/slices/productSlice";
 function Filter(){
     const [isOpen, setIsOpen] = useState(false);
-    const {categories, setPriceRange, handleCategorySelect, priceRange} = useProductValue();
+    // const {categories, setPriceRange, handleCategorySelect, priceRange} = useProductValue();
+    const {categories, priceRange} = useSelector(productSelector);
+    const {setPriceRange, handleCategorySelect} = productActions;
+    const dispatch = useDispatch();
     
     const toggleFilter = ()=>{
         setIsOpen(!isOpen);
@@ -16,12 +21,12 @@ function Filter(){
             <h3>Filter</h3>
             <div className={styles.rangeGroup}>
                 <label>Price: {Math.round(priceRange*100)/100}</label>
-                <input type="range" min={0} max={1000} step={10} value={priceRange} onChange={(e)=>{setPriceRange(e.target.value)}}/>
+                <input type="range" min={0} max={1000} step={10} value={priceRange} onChange={(e)=>{dispatch(setPriceRange(e.target.value))}}/>
             </div>
             <h3>Category</h3>
             {
             categories.map((category, index)=><div key={index} className={styles.checkboxGroup}>
-                <input type="checkbox" id={category} value={category} onClick={(e)=>{handleCategorySelect(e.target.checked, e.target.value)}}/>
+                <input type="checkbox" id={category} value={category} onClick={(e)=>{dispatch(handleCategorySelect({checked:e.target.checked, selectedCategory:e.target.value}))}}/>
                 <label htmlFor={category}>{category}</label>
             </div>)
             }

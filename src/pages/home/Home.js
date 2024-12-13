@@ -2,10 +2,19 @@ import Spinner from "react-spinner-material";
 import Filter from "../../components/filter/Filter";
 import ProductCard from "../../components/product-card/ProductCard";
 import Search from "../../components/search/Search";
-import { useProductValue } from "../../context/productContext";
+// import { useProductValue } from "../../context/productContext";
 import styles from "./home.module.css"
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getLoggedInUser } from "../../redux/slices/userSlice";
+import { getAllProducts, productSelector } from "../../redux/slices/productSlice";
 function Home(){
-    const {filteredProducts, isLoading} = useProductValue();
+    const {filteredProducts, isLoading} = useSelector(productSelector);
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        dispatch(getLoggedInUser());
+        dispatch(getAllProducts())
+    },[dispatch])
     return <div className={styles.main}>
         <div className={styles.searchContainer}>
             <Search/>
