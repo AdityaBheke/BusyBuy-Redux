@@ -19,8 +19,10 @@ export const getOrders = createAsyncThunk(
         )
       );
       const orders = snapShot.docs.map((doc) => {
-        return { id: doc.id, ...doc.data() };
+        return { id: doc.id, ...doc.data(), date:(doc.data()).date.toDate().toISOString()};
       });
+      console.log(orders);
+      
       thunkApi.dispatch(orderActions.setOrders(orders));
     } catch (error) {
     } finally {
