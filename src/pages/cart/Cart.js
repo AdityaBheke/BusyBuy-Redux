@@ -1,17 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CartItem from "../../components/cartItem/CartItem";
-import { useUserValue } from "../../context/userContext";
+// import { useUserValue } from "../../context/userContext";
 import styles from "./cart.module.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { cartSelector, getCartItems, handlePurchase } from "../../redux/slices/cartSlice";
 
 function Cart(){
     const [purchaseButton, setPurchaseButton] = useState("Purchase");
     const navigate = useNavigate();
-    const {cart, grandTotal, handlePurchase} = useUserValue();
+    const dispatch = useDispatch();
+    const {cart, grandTotal} = useSelector(cartSelector);
+    // const {cart, grandTotal, handlePurchase} = useUserValue();
+    useEffect(()=>{
+        dispatch(getCartItems())
+    },[dispatch])
     const handleCheckout = async()=>{
         try {
             setPurchaseButton("Purchasing")
-            await handlePurchase();
+            dispatch(handlePurchase())
             navigate("/orders")
         } catch (error) {
             console.log(error.message);
