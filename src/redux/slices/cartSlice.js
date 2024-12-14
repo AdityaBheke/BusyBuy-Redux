@@ -6,11 +6,9 @@ import { toast } from "react-toastify";
 
 const initialState = {
     cart: [],
-    grandTotal: 0,
-    isLoading:true
+    grandTotal: 0
 }
 export const getCartItems = createAsyncThunk('cart/getCartItems',async(arg, thunkApi)=>{
-  thunkApi.dispatch(cartActions.setLoading(true));
   try {
     const state = thunkApi.getState();
     const {user} = userSelector(state);
@@ -20,7 +18,6 @@ export const getCartItems = createAsyncThunk('cart/getCartItems',async(arg, thun
   } catch (error) {
     
   }finally{
-    thunkApi.dispatch(cartActions.setLoading(false))
   }
 });
 export const handleAddToCart = createAsyncThunk('cart/handleAddToCart',async(arg,thunkApi)=>{
@@ -49,7 +46,7 @@ export const handleAddToCart = createAsyncThunk('cart/handleAddToCart',async(arg
           await addDoc(collection(db, "carts"), newItem);
     }
     thunkApi.dispatch(getCartItems())
-    toast.success("Item added");
+    toast.success("Item added to cart.");
 })
 export const handleRemoveCart = createAsyncThunk('cart/removeCart',async(arg, thunkApi)=>{
     const productId = arg;
@@ -64,7 +61,7 @@ export const handleRemoveCart = createAsyncThunk('cart/removeCart',async(arg, th
         );
         snapshot.forEach(async (doc) => await deleteDoc(doc.ref));
         thunkApi.dispatch(getCartItems())
-        toast.success("Item removed");
+        toast.success("Item removed from cart.");
 })
 export const increaseQuantity = createAsyncThunk('cart/increaseQuantity', async(arg, thunkApi)=>{
     const productId = arg;
@@ -115,7 +112,7 @@ export const handlePurchase = createAsyncThunk('cart/handlePurchase', async(arg,
           );
           snapshot.forEach(async (doc) => await deleteDoc(doc.ref));
           thunkApi.dispatch(getCartItems())
-          toast.success("Order placed");
+          toast.success("Order placed! Thank you for shopping with us!");
         }
 })
 const cartSlice = createSlice({

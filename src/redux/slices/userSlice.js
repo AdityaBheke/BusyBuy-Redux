@@ -17,11 +17,11 @@ export const handleSignUpThunk = createAsyncThunk('user/signup',async(arg, thunk
     const {email, password} = arg;
     try {
         await createUserWithEmailAndPassword(auth, email, password);
-        toast.success("Welcome");
+        toast.success("Welcome aboard! Your account is ready.");
         return true;
     } catch (error) {
         console.log(error);
-        toast.error("Error")
+        toast.error("Something went wrong!")
         return false;
     }
 });
@@ -32,11 +32,11 @@ export const handleSignInThunk = createAsyncThunk('user/signin', async(arg, thun
         const signedInUser = await signInWithEmailAndPassword(auth, email, password);
         thunkApi.dispatch(userActions.loginUser(signedInUser.user));
         localStorage.setItem("user", JSON.stringify(signedInUser.user));
-        toast.success("Welcome!");
+        toast.success("Welcome! You’re signed in.");
         return true;
     } catch (error) {
         console.log(error);
-        toast.error("Error")
+        toast.error("Oops! Check your credentials and try again.")
         return false;
     }
 });
@@ -53,6 +53,7 @@ const userSlice = createSlice({
             state.user = null;
             state.isLoggedIn = false;
             localStorage.setItem("user", "");
+            toast.success("You’ve been logged out. See you soon!");
         }
     }
 });
