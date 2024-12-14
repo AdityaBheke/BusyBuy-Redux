@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"; // Importing for navigation between routes
 import styles from "./productCard.module.css"; // Importing CSS module for styling
-import { useState } from "react"; // Importing useState for local state management
+import { useCallback, useState } from "react"; // Importing useState for local state management
 import { useDispatch, useSelector } from "react-redux"; // Importing Redux hooks
 import { userSelector } from "../../redux/slices/userSlice"; // Importing userSelector to get user-related state
 import { handleAddToCart } from "../../redux/slices/cartSlice"; // Importing cart-related action
@@ -17,7 +17,7 @@ function ProductCard(props) {
   const navigate = useNavigate(); // Initializing navigation hook
 
   // Handle "Add to Cart" button click
-  const handleAdd = async () => {
+  const handleAdd = useCallback(async () => {
     try {
       // Setting button state to show loading spinner
       setButtonText(<i className="fi fi-rr-loading"></i>);
@@ -34,7 +34,7 @@ function ProductCard(props) {
       // Resetting button state back to "Add to Cart"
       setButtonText(<>Add to Cart</>);
     }
-  };
+  },[dispatch,isLoggedIn,navigate, props.product])
 
   return (
     <div className={styles.card} title={title}>

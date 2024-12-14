@@ -4,12 +4,16 @@ import { Link, Outlet } from "react-router-dom"; // For routing and nested compo
 import { userSelector } from "../../redux/slices/userSlice"; // Selector to get user-related state
 import { userActions } from "../../redux/slices/userSlice"; // Actions for user state management
 import { useDispatch } from "react-redux"; // To dispatch actions to Redux store
+import { useCallback } from "react";
 
 function Navbar() {
   // Extracting the 'isLoggedIn' state from Redux using the user selector
   const { isLoggedIn } = useSelector(userSelector);
   const dispatch = useDispatch(); // Initializing dispatch function
 
+  const handleLogout = useCallback(() => {
+    dispatch(userActions.logoutUser()); // Dispatch logout action when clicked
+  },[dispatch])
   return (
     <>
       {/* Navigation bar container */}
@@ -44,9 +48,7 @@ function Navbar() {
           {/* Login/Logout link */}
           <Link
             to={isLoggedIn ? "/" : "/signin"} // Redirects to home if logged in, otherwise to signin
-            onClick={() => {
-              dispatch(userActions.logoutUser()); // Dispatch logout action when clicked
-            }}
+            onClick={handleLogout}
           >
             <li>
               <i className="fi fi-br-exit"></i> {isLoggedIn ? "Logout" : "Login"}

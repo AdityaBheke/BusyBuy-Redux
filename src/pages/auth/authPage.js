@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"; // Importing navigation components from react-router-dom
 import styles from "./auth.module.css"; // Importing styles for the authentication page
-import { useEffect, useState } from "react"; // Importing hooks for handling state and effects
+import { useCallback, useEffect, useState } from "react"; // Importing hooks for handling state and effects
 import { useDispatch } from "react-redux"; // Importing hook to dispatch actions to the Redux store
 import { handleSignUpThunk, handleSignInThunk } from "../../redux/slices/userSlice"; // Importing the signup and signin thunks from Redux slice
 
@@ -26,7 +26,7 @@ function AuthPage({ type }) {
     }, [type]); // Dependency on 'type' prop to re-run the effect on change
 
     // handleSubmit function for form submission
-    const handleSubmit = async (e) => {
+    const handleSubmit = useCallback(async (e) => {
         e.preventDefault(); // Prevent the default form submission behavior
         try {
             setButtonText(<i className="fi fi-rr-loading"></i>); // Change button text to loading icon
@@ -46,7 +46,7 @@ function AuthPage({ type }) {
         } finally {
             setButtonText(reg ? "Sign Up" : "Sign In"); // Reset button text back to default
         }
-    }
+    },[dispatch, name, password, email, reg, navigate])
 
     // Function to clear form fields
     const clearForm = () => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"; // Importing React hooks
+import { useCallback, useEffect, useState } from "react"; // Importing React hooks
 import CartItem from "../../components/cartItem/CartItem"; // Importing CartItem component to display individual items in the cart
 import styles from "./cart.module.css"; // Importing CSS module for styling the Cart page
 import { useNavigate } from "react-router-dom"; // Importing useNavigate hook for navigating to different pages
@@ -18,7 +18,7 @@ function Cart() {
     }, [dispatch]);
 
     // Handling checkout (purchase) process
-    const handleCheckout = async () => {
+    const handleCheckout = useCallback(async () => {
         try {
             setPurchaseButton("Purchasing"); // Updating button text while purchase is in progress
             await dispatch(handlePurchase()).unwrap(); // Dispatching action to handle the purchase
@@ -28,7 +28,7 @@ function Cart() {
         } finally {
             setPurchaseButton("Purchase"); // Resetting button text after purchase
         }
-    };
+    },[dispatch, navigate])
 
     return (
         <>

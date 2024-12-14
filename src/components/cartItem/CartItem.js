@@ -1,4 +1,4 @@
-import { useState } from "react"; // Importing useState hook for managing component-specific state
+import { useCallback, useState } from "react"; // Importing useState hook for managing component-specific state
 import styles from "./cartItem.module.css"; // Importing CSS module for styling the CartItem component
 import { useDispatch } from "react-redux"; // Importing useDispatch hook to dispatch Redux actions
 import { decreaseQuantity, handleRemoveCart, increaseQuantity } from "../../redux/slices/cartSlice"; // Importing Redux actions for cart management
@@ -12,7 +12,7 @@ function CartItem(props) {
   const { productId, title, image, price, quantity } = props.cartItem;
 
   // Function to handle the removal of an item from the cart
-  const handleRemove = async () => {
+  const handleRemove = useCallback(async () => {
     setButtonText("Removing"); // Setting button text to indicate removal process
     try {
       dispatch(handleRemoveCart(productId)); // Dispatching action to remove the item
@@ -21,7 +21,15 @@ function CartItem(props) {
     } finally {
       setButtonText("Remove from cart"); // Resetting button text after operation
     }
-  };
+  },[dispatch, productId]);
+
+  const handleIncrease = useCallback(() => {
+    dispatch(increaseQuantity(productId)); // Dispatching action to increase quantity
+  },[dispatch, productId])
+
+  const handleDecrease = useCallback(() => {
+    dispatch(decreaseQuantity(productId)); // Dispatching action to decrease quantity
+    },[dispatch, productId])
 
   return (
     <div className={styles.card} title={title}> {/* Main container for the cart item */}
@@ -44,18 +52,14 @@ function CartItem(props) {
             {/* Increase quantity button */}
             <button
               className={styles.changeQnty}
-              onClick={() => {
-                dispatch(increaseQuantity(productId)); // Dispatching action to increase quantity
-              }}
+              onClick={handleIncrease}
             >
               <i className="fi fi-sr-add"></i> {/* Add icon */}
             </button>
             {/* Displaying current quantity */}
             <span className={styles.quantity}>{quantity}</span>
             {/* Decrease quantity button */}
-            <button className={styles.changeQnty} onClick={() => {
-              dispatch(decreaseQuantity(productId)); // Dispatching action to decrease quantity
-              }}>
+            <button className={styles.changeQnty} onClick={handleDecrease}>
               <i className="fi fi-sr-minus-circle"></i> {/* Minus icon */}
             </button>
           </div>
