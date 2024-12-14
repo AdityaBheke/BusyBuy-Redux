@@ -7,6 +7,6 @@ function Search(){
     // const {searchText, setSearchText} = useProductValue();
     const {searchText} = useSelector(productSelector);
     const dispatch = useDispatch();
-    return <input type="text" placeholder="Search" className={styles.search} value={searchText} onChange={(e)=>{dispatch(productActions.setSearchText(e.target.value))}}/>;
+    return <input type="text" placeholder="Search by name" className={styles.search} value={searchText} onChange={(e)=>{dispatch(productActions.setSearchText(e.target.value))}}/>;
 }
 export default Search;
