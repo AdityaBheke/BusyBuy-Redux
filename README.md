@@ -1,10 +1,10 @@
 # Busy-Buy
 
-Busy-Buy is a feature-rich e-commerce web application built using React and Firebase. It provides users with a seamless shopping experience, including product filtering, order management, cart management and user authentication.
+Busy-Buy is a feature-rich e-commerce web application built using React, Redux Toolkit and Firebase. It provides users with a seamless shopping experience, including product filtering, order management, cart management and user authentication.
 
 ## Live Demo
 
-[🔗 Live Preview](https://adityab-busybuy.netlify.app/)
+[🔗 Live Preview](https://adityab-busybuy-redux.netlify.app/)
 
 ## Features
 
@@ -38,7 +38,7 @@ Busy-Buy is a feature-rich e-commerce web application built using React and Fire
 ## Technologies Used
 - **React**: For building the user interface.
 - **react-router-dom**: For handling page navigation.
-- **Contexts**: For global state management.
+- **Redux Toolkit**: For state management.
 - **Firebase**: 
   - Firestore for real-time database and order storage.
   - Firebase Authentication for user sign-in and sign-up.
@@ -48,8 +48,8 @@ Busy-Buy is a feature-rich e-commerce web application built using React and Fire
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/AdityaBheke/BusyBuy.git
-   cd BusyBuy
+   git clone https://github.com/AdityaBheke/BusyBuy-Redux.git
+   cd BusyBuy-Redux
 2. Install dependecies:
     ```bash
     npm install
