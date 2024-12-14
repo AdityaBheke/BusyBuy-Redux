@@ -6,13 +6,11 @@ import Search from "../../components/search/Search";
 import styles from "./home.module.css"
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getLoggedInUser } from "../../redux/slices/userSlice";
 import { getAllProducts, productSelector } from "../../redux/slices/productSlice";
 function Home(){
     const {filteredProducts, isLoading} = useSelector(productSelector);
     const dispatch = useDispatch();
     useEffect(()=>{
-        dispatch(getLoggedInUser());
         dispatch(getAllProducts())
     },[dispatch])
     return <div className={styles.main}>

@@ -5,14 +5,18 @@ import Home from "./pages/home/Home";
 import Cart from "./pages/cart/Cart";
 import Order from "./pages/order/Order";
 import AuthPage from "./pages/auth/authPage";
-// import ProductContextProvider from "./context/productContext";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ErrorPage from "./pages/error/errorPage";
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getLoggedInUser } from "./redux/slices/userSlice";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(getLoggedInUser());
+  },[dispatch])
   const browserRouter = createBrowserRouter([
     {
       path: "/",
@@ -44,10 +48,8 @@ function App() {
   ]);
   return (
     <div className="App">
-      <ToastContainer autoClose={2000} pauseOnHover={false} closeOnClick/>
-      <Provider store={store}>
-          <RouterProvider router={browserRouter} />
-      </Provider>
+      <ToastContainer autoClose={2000} pauseOnHover={false} closeOnClick />
+      <RouterProvider router={browserRouter} />
     </div>
   );
 }
