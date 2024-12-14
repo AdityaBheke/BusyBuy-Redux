@@ -1,11 +1,9 @@
 import { useState } from "react";
 import styles from "./filter.module.css";
-// import { useProductValue } from "../../context/productContext";
 import { useDispatch, useSelector } from "react-redux";
 import { productActions, productSelector } from "../../redux/slices/productSlice";
 function Filter(){
     const [isOpen, setIsOpen] = useState(false);
-    // const {categories, setPriceRange, handleCategorySelect, priceRange} = useProductValue();
     const {categories, priceRange} = useSelector(productSelector);
     const {setPriceRange, handleCategorySelect} = productActions;
     const dispatch = useDispatch();
@@ -21,7 +19,7 @@ function Filter(){
             <h3>Filter</h3>
             <div className={styles.rangeGroup}>
                 <label>Price: {Math.round(priceRange*100)/100}</label>
-                <input type="range" min={0} max={1000} step={10} value={priceRange} onChange={(e)=>{dispatch(setPriceRange(e.target.value))}}/>
+                <input type="range" min={10} max={1000} step={10} value={priceRange} onChange={(e)=>{dispatch(setPriceRange(e.target.value))}}/>
             </div>
             <h3>Category</h3>
             {
