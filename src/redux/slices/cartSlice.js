@@ -31,11 +31,14 @@ export const getCartItems = createAsyncThunk("cart/getCartItems", async (arg, th
 
 // Thunk to add a product to the cart
 export const handleAddToCart = createAsyncThunk("cart/handleAddToCart", async (arg, thunkApi) => {
+  // fetch all and set cartItems of user before adding new cartItem
+  await thunkApi.dispatch(getCartItems());
+
   const product = arg; // Product to be added to the cart
   const state = thunkApi.getState(); // Get the current Redux state
   const { user } = userSelector(state); // Get logged-in user data from the state
   const { cart } = cartSelector(state); // Get current cart items
-  
+
   // Check if the product is already in the cart
   const availableItem = cart.find((cartItem) => cartItem.productId === product.id);
   
