@@ -26,7 +26,7 @@ function AuthPage({type}){
         try {
             setButtonText(<i className="fi fi-rr-loading"></i>)
             if (reg) {
-                const result = await dispatch(handleSignUpThunk({email, password})).unwrap();
+                const result = await dispatch(handleSignUpThunk({email, password, name})).unwrap();
                 result && navigate("/signin");
                 clearForm();
             } else {

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { toast } from "react-toastify";
 import { auth } from "../../config/firebase.config";
 
@@ -8,15 +8,20 @@ const initialState = {isLoggedIn:false, user:null}
 export const getLoggedInUser = createAsyncThunk('user/getLoggedInUser',(arg, thunkApi)=>{
     const prevUser = JSON.parse(localStorage.getItem("user"));
     if (prevUser) {
-        thunkApi.dispatch(userActions.loginUser(prevUser))
+        thunkApi.dispatch(userActions.loginUser(prevUser));
+        // toast.success(`Welcome! ${prevUser.displayName?prevUser.displayName:""} You’re signed in.`);
     }
 });
 
 export const handleSignUpThunk = createAsyncThunk('user/signup',async(arg, thunkApi)=>{
     console.log(arg);
-    const {email, password} = arg;
+    const {email, password, name} = arg;
     try {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const createdUser = await createUserWithEmailAndPassword(auth, email, password);
+        const user = createdUser.user;
+        await updateProfile(user,{
+            displayName:name
+        })
         toast.success("Welcome aboard! Your account is ready.");
         return true;
     } catch (error) {
@@ -30,9 +35,15 @@ export const handleSignInThunk = createAsyncThunk('user/signin', async(arg, thun
     const {email, password} = arg;
     try {
         const signedInUser = await signInWithEmailAndPassword(auth, email, password);
-        thunkApi.dispatch(userActions.loginUser(signedInUser.user));
-        localStorage.setItem("user", JSON.stringify(signedInUser.user));
-        toast.success("Welcome! You’re signed in.");
+        console.log(signedInUser.user);
+        const user = {
+          uid: signedInUser.user.uid,
+          email: signedInUser.user.email,
+          displayName: signedInUser.user.displayName,
+        };
+        thunkApi.dispatch(userActions.loginUser(user));
+        localStorage.setItem("user", JSON.stringify(user));
+        toast.success(`Welcome! ${user.displayName?user.displayName:""} You’re signed in.`);
         return true;
     } catch (error) {
         console.log(error);
