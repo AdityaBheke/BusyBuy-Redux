@@ -4,14 +4,21 @@ import OrderItem from "../../components/orderItem/OrderItem";
 import styles from "./order.module.css";
 import { getOrders, orderSelector } from "../../redux/slices/orderSlice";
 import { useEffect } from "react";
+import Spinner from "react-spinner-material";
 
 function Order(){
     // const {orders} = useUserValue();
-    const {orders} = useSelector(orderSelector);
+    const {orders, isLoading} = useSelector(orderSelector);
     const dispatch = useDispatch();
     useEffect(()=>{
         dispatch(getOrders());
     },[dispatch])
+
+    if (isLoading) {
+        return <div className={styles.loadingContainer}>
+        <Spinner radius={100} stroke={10} color="#294C60"/>
+        </div>
+    }
     return (<>
     {orders.length>0 && <div className={styles.main}>
         <h1>Your Orders</h1>

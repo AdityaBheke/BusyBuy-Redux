@@ -6,14 +6,22 @@ import { toast } from "react-toastify";
 
 const initialState = {
     cart: [],
-    grandTotal: 0
+    grandTotal: 0,
+    isLoading:true
 }
 export const getCartItems = createAsyncThunk('cart/getCartItems',async(arg, thunkApi)=>{
+  thunkApi.dispatch(cartActions.setLoading(true));
+  try {
     const state = thunkApi.getState();
     const {user} = userSelector(state);
     const snapShot = await getDocs(query(collection(db,'carts'), where('userId',"==",user.uid)));
     const cart = snapShot.docs.map((doc)=>{return {id:doc.id, ...doc.data()}});
     thunkApi.dispatch(cartActions.setCart(cart));
+  } catch (error) {
+    
+  }finally{
+    thunkApi.dispatch(cartActions.setLoading(false))
+  }
 });
 export const handleAddToCart = createAsyncThunk('cart/handleAddToCart',async(arg,thunkApi)=>{
     const product = arg;
@@ -117,7 +125,10 @@ const cartSlice = createSlice({
         setCart:(state, action)=>{
             state.cart = action.payload;
             state.grandTotal=Math.round((action.payload.reduce((total,cartItem)=>{return total+(cartItem.price*cartItem.quantity)},0))*100)/100;
-        }
+        },
+        setLoading:(state, action)=>{
+          state.isLoading = action.payload;
+      },
     }
 });
 

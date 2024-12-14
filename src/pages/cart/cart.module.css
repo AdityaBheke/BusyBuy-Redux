@@ -65,7 +65,13 @@
     background-color: var(--neutral);
     color: var(--dark);
 }
-
+.loadingContainer{
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 @media screen and (max-width: 1500px) {
   
 }

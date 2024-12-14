@@ -5,12 +5,13 @@ import styles from "./cart.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cartSelector, getCartItems, handlePurchase } from "../../redux/slices/cartSlice";
+import Spinner from "react-spinner-material";
 
 function Cart(){
     const [purchaseButton, setPurchaseButton] = useState("Purchase");
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {cart, grandTotal} = useSelector(cartSelector);
+    const {cart, grandTotal, isLoading} = useSelector(cartSelector);
     // const {cart, grandTotal, handlePurchase} = useUserValue();
     useEffect(()=>{
         dispatch(getCartItems())
@@ -25,6 +26,11 @@ function Cart(){
         }finally{
             setPurchaseButton("Purchase")
         }
+    }
+    if (isLoading) {
+        return <div className={styles.loadingContainer}>
+        <Spinner radius={100} stroke={10} color="#294C60"/>
+        </div>
     }
     return (<>
     {cart.length>0 && <div className={styles.main}>
