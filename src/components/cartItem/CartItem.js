@@ -1,43 +1,75 @@
-import { useState } from "react";
-// import { useUserValue } from "../../context/userContext";
-import styles from "./cartItem.module.css";
-import { useDispatch } from "react-redux";
-import { decreaseQuantity, handleRemoveCart, increaseQuantity } from "../../redux/slices/cartSlice";
+import { useState } from "react"; // Importing useState hook for managing component-specific state
+import styles from "./cartItem.module.css"; // Importing CSS module for styling the CartItem component
+import { useDispatch } from "react-redux"; // Importing useDispatch hook to dispatch Redux actions
+import { decreaseQuantity, handleRemoveCart, increaseQuantity } from "../../redux/slices/cartSlice"; // Importing Redux actions for cart management
+
 function CartItem(props) {
-  const [buttonText, setButtonText] = useState("Remove from cart")
-  const dispatch = useDispatch();
-  // const {increaseQuantity, decreaseQuantity, handleRemoveCart} = useUserValue();
-  const {productId, title, image, price, quantity} = props.cartItem;
-  const handleRemove = async()=>{
-    setButtonText("Removing")
+  // State to handle the text of the remove button
+  const [buttonText, setButtonText] = useState("Remove from cart");
+  const dispatch = useDispatch(); // Initializing dispatch to send actions to the store
+
+  // Destructuring cart item properties from props
+  const { productId, title, image, price, quantity } = props.cartItem;
+
+  // Function to handle the removal of an item from the cart
+  const handleRemove = async () => {
+    setButtonText("Removing"); // Setting button text to indicate removal process
     try {
-      dispatch(handleRemoveCart(productId))
+      dispatch(handleRemoveCart(productId)); // Dispatching action to remove the item
     } catch (error) {
-      console.log(error.message);
-    }finally{
-      setButtonText("Remove from cart")
+      console.log(error.message); // Logging error in case of failure
+    } finally {
+      setButtonText("Remove from cart"); // Resetting button text after operation
     }
-  }
+  };
+
   return (
-    <div className={styles.card} title={title}>
+    <div className={styles.card} title={title}> {/* Main container for the cart item */}
+      {/* Product image */}
       <img
         src={image}
         alt="product-image"
         className={styles.thumbnail}
       />
-      <div className={styles.cardInfo}>
-      <span className={styles.title}>{title.length>30?title.substring(0,30)+"...":title}</span>
-      <div className={styles.priceContainer}>
-        <span className={styles.price}>${price}</span>
-        <div className={styles.quantityGroup}>
-          <button className={styles.changeQnty} onClick={()=>{dispatch(increaseQuantity(productId))}}><i className="fi fi-sr-add"></i></button>
-          <span className={styles.quantity}>{quantity}</span>
-          <button className={styles.changeQnty} onClick={()=>{dispatch(decreaseQuantity(productId))}}><i className="fi fi-sr-minus-circle"></i></button>
+      <div className={styles.cardInfo}> {/* Container for product information */}
+        {/* Displaying product title */}
+        <span className={styles.title}>
+          {title.length > 30 ? title.substring(0, 30) + "..." : title} {/* Truncating title if too long */}
+        </span>
+        <div className={styles.priceContainer}> {/* Container for price and quantity controls */}
+          {/* Displaying product price */}
+          <span className={styles.price}>${price}</span>
+          {/* Quantity adjustment controls */}
+          <div className={styles.quantityGroup}>
+            {/* Increase quantity button */}
+            <button
+              className={styles.changeQnty}
+              onClick={() => {
+                dispatch(increaseQuantity(productId)); // Dispatching action to increase quantity
+              }}
+            >
+              <i className="fi fi-sr-add"></i> {/* Add icon */}
+            </button>
+            {/* Displaying current quantity */}
+            <span className={styles.quantity}>{quantity}</span>
+            {/* Decrease quantity button */}
+            <button className={styles.changeQnty} onClick={() => {
+              dispatch(decreaseQuantity(productId)); // Dispatching action to decrease quantity
+              }}>
+              <i className="fi fi-sr-minus-circle"></i> {/* Minus icon */}
+            </button>
+          </div>
         </div>
       </div>
-      </div>
-      <button className={styles.remove} onClick={handleRemove}>{buttonText}</button>
+      {/* Remove from cart button */}
+      <button
+        className={styles.remove}
+        onClick={handleRemove}
+      >
+        {buttonText}
+      </button>
     </div>
   );
 }
-export default CartItem;
+
+export default CartItem; // Exporting CartItem component for use in other parts of the app
